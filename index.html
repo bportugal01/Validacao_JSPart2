@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Cadastro</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .erro {
+            color: red;
+            font-size: 12px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .success-message {
+            background-color: #4CAF50;
+            /* Cor de fundo verde */
+            color: #fff;
+            /* Cor do texto branco */
+            padding: 10px;
+            /* Espaçamento interno */
+            border-radius: 4px;
+            /* Cantos arredondados */
+            text-align: center;
+            margin-bottom: 10px;
+            display: none;
+            /* Inicialmente oculta */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Formulário de Cadastro</h2>
+        <form name="cadastro" method="">
+            <div class="form-group">
+                <label>Nome:</label>
+                <input type="text" name="nome" id="nome" minlength="4" maxlength="32" placeholder="Digite seu nome"
+                    autocomplete="off">
+                <span></span> <!-- Mensagem de erro para o campo nome -->
+            </div>
+
+            <div class="form-group">
+                <label>Endereço:</label>
+                <input type="text" name="endereco" id="endereco" placeholder="Digite seu endereço" autocomplete="off">
+                <span></span> <!-- Mensagem de erro para o campo endereço -->
+            </div>
+
+            <div class="form-group">
+                <label>Bairro:</label>
+                <input type="text" name="bairro" id="bairro" placeholder="Digite seu bairro" autocomplete="off">
+                <span></span> <!-- Mensagem de erro para o campo bairro -->
+            </div>
+
+            <div class="form-group">
+                <label>CEP:</label>
+                <input type="text" name="cep" id="cep" placeholder="Digite seu CEP" autocomplete="off">
+                <span></span> <!-- Mensagem de erro para o campo cep -->
+            </div>
+
+            <div class="form-group">
+                <label>Cidade:</label>
+                <input type="text" name="cidade" id="cidade" placeholder="Digite sua cidade" autocomplete="off">
+                <span></span> <!-- Mensagem de erro para o campo cidade -->
+            </div>
+
+            <div class="form-group">
+                <label>Estado:</label>
+                <select name="estado" id="estado">
+                    <option value=" " disabled selected>Selecione o estado</option>
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espirito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="PR">Paraná</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="TO">Tocantis</option>
+                </select>
+                <span></span> <!-- Mensagem de erro para o campo estado -->
+            </div>
+
+            <button type="button" name="cadastrar" id="cadastrar" onclick="ValidarDados()">Cadastrar</button>
+
+        </form>
+    </div>
+
+    <script>
+        function ValidarDados() {
+            // Expressão regular para caracteres especiais
+            var regexCaracteresEspeciais = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
+            // Função para exibir uma mensagem de erro embaixo de um campo
+            function exibirErro(campoId, mensagem) {
+                var campo = document.getElementById(campoId);
+                var mensagemErro = document.getElementById(campoId + "-erro");
+                if (!mensagemErro) {
+                    mensagemErro = document.createElement("span");
+                    mensagemErro.className = "erro";
+                    mensagemErro.id = campoId + "-erro";
+                    campo.parentNode.insertBefore(mensagemErro, campo.nextSibling);
+                }
+                mensagemErro.textContent = mensagem;
+            }
+
+            // Função para limpar mensagens de erro
+            function limparErros() {
+                var erros = document.querySelectorAll(".erro");
+                erros.forEach(function (erro) {
+                    erro.parentNode.removeChild(erro);
+                });
+            }
+
+            // Limpar mensagens de erro ao início da validação
+            limparErros();
+
+            if (document.getElementById("nome").value == "") {
+                exibirErro("nome", "Preencha o campo nome");
+                console.log("Preencha o campo nome");
+            } else if (regexCaracteresEspeciais.test(document.getElementById("nome").value)) {
+                exibirErro("nome", "O campo nome não pode conter caracteres especiais");
+                console.log("O campo nome não pode conter caracteres especiais");
+            } else if (document.getElementById("endereco").value == "") {
+                exibirErro("endereco", "Preencha o campo endereço");
+                console.log("Preencha o campo endereço");
+            } else if (regexCaracteresEspeciais.test(document.getElementById("endereco").value)) {
+                exibirErro("endereco", "O campo endereço não pode conter caracteres especiais");
+                console.log("O campo endereço não pode conter caracteres especiais");
+            } else if (document.getElementById("bairro").value == "") {
+                exibirErro("bairro", "Preencha o campo bairro");
+                console.log("Preencha o campo bairro");
+            } else if (regexCaracteresEspeciais.test(document.getElementById("bairro").value)) {
+                exibirErro("bairro", "O campo bairro não pode conter caracteres especiais");
+                console.log("O campo bairro não pode conter caracteres especiais");
+            } else if (document.getElementById("cep").value == "") {
+                exibirErro("cep", "Preencha o campo CEP");
+                console.log("Preencha o campo CEP");
+            } else if (!/^\d{5}-\d{3}$/.test(document.getElementById("cep").value)) {
+                exibirErro("cep", "Formato de CEP inválido (ex: 12345-678)");
+                console.log("Formato de CEP inválido");
+            } else if (document.getElementById("cidade").value == "") {
+                exibirErro("cidade", "Preencha o campo cidade");
+                console.log("Preencha o campo cidade");
+            } else if (regexCaracteresEspeciais.test(document.getElementById("cidade").value)) {
+                exibirErro("cidade", "O campo cidade não pode conter caracteres especiais");
+                console.log("O campo cidade não pode conter caracteres especiais");
+            } else if (document.getElementById("estado").value == " ") {
+                exibirErro("estado", "Selecione um estado válido");
+                console.log("Selecione um estado válido");
+            } else {
+                // Dados válidos, exibir o alerta de sucesso com SweetAlert2
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Dados cadastrados com sucesso!',
+                    showConfirmButton: false,
+                    timer: 1500 // Tempo em milissegundos (1,5 segundos)
+                });
+
+                // Aqui você pode enviar os dados para o servidor ou realizar outras ações necessárias
+                return true;
+            }
+            // Impedir o envio do formulário se houver erros
+            return false;
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9">
+    </script>
+</body>
+
+</html>
